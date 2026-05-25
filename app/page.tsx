@@ -58,24 +58,27 @@ function MultiSelectDropdown({ selected, onChange, hasError }: { selected: strin
   }
 
   return (
-    <div className="multi-select-container" ref={dropdownRef}>
-      <div className={`multi-select-header ${hasError ? 'input-error' : ''}`} onClick={() => setIsOpen(!isOpen)}>
-        <span className={selectedArray.length === 0 ? 'placeholder' : ''} style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+    <div className="relative w-full" ref={dropdownRef}>
+      <div 
+        className={`flex items-center justify-between w-full border rounded-xl py-3.5 px-4 bg-white cursor-pointer transition-all duration-200 text-[15px] hover:border-gray-400 ${hasError ? 'border-[#e31313] shadow-[0_0_0_4px_rgba(227,19,19,0.15)]' : 'border-gray-300'}`} 
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className={selectedArray.length === 0 ? 'text-gray-500' : 'text-[#0f0f11]'} style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {selectedArray.length === 0 ? 'Select services...' : selectedArray.join(', ')}
         </span>
-        <svg className={`chevron ${isOpen ? 'open' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+        <svg className={`transition-transform duration-200 text-gray-500 ${isOpen ? 'rotate-180' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </div>
       {isOpen && (
-        <div className="multi-select-dropdown">
+        <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-white border border-gray-200 rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] p-2 z-50 flex flex-col gap-1">
           {SERVICE_OPTIONS.map(option => (
             <div 
               key={option} 
-              className="multi-select-option" 
+              className="flex items-center gap-3 py-2.5 px-3 rounded-lg cursor-pointer transition-colors duration-150 text-sm font-semibold select-none hover:bg-gray-50 text-[#0f0f11]" 
               onClick={() => toggleOption(option)}
             >
-              <div className={`checkbox ${selectedArray.includes(option) ? 'checked' : ''}`}>
+              <div className={`w-[18px] h-[18px] border-2 rounded flex items-center justify-center transition-all duration-150 ${selectedArray.includes(option) ? 'bg-[#e31313] border-[#e31313]' : 'border-gray-300'}`}>
                 {selectedArray.includes(option) && (
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12" />
@@ -123,26 +126,29 @@ function SingleSelectDropdown({
   }
 
   return (
-    <div className="single-select-container" ref={dropdownRef}>
-      <div className={`single-select-header ${hasError ? 'input-error' : ''}`} onClick={() => setIsOpen(!isOpen)}>
-        <span className={!value ? 'placeholder' : ''} style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+    <div className="relative w-full" ref={dropdownRef}>
+      <div 
+        className={`flex items-center justify-between w-full border rounded-xl py-3.5 px-4 bg-white cursor-pointer transition-all duration-200 text-[15px] hover:border-gray-400 ${hasError ? 'border-[#e31313] shadow-[0_0_0_4px_rgba(227,19,19,0.15)]' : 'border-gray-300'}`} 
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className={!value ? 'text-gray-500' : 'text-[#0f0f11]'} style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {value || placeholder || 'Select...'}
         </span>
-        <svg className={`chevron ${isOpen ? 'open' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+        <svg className={`transition-transform duration-200 text-gray-500 ${isOpen ? 'rotate-180' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </div>
       {isOpen && (
-        <div className="single-select-dropdown">
+        <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-white border border-gray-200 rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] p-2 z-50 flex flex-col gap-1">
           {options.map(option => (
             <div 
               key={option} 
-              className={`single-select-option ${value === option ? 'selected' : ''}`} 
+              className={`flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer transition-colors duration-150 text-sm font-semibold select-none hover:bg-gray-50 ${value === option ? 'bg-[#e31313]/5 text-[#e31313]' : 'text-[#0f0f11]'}`} 
               onClick={() => handleSelect(option)}
             >
               <span>{option}</span>
               {value === option && (
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 'auto' }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#e31313" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 'auto' }}>
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               )}
@@ -153,8 +159,6 @@ function SingleSelectDropdown({
     </div>
   )
 }
-
-
 
 function HomeContent() {
   const searchParams = useSearchParams()
@@ -384,92 +388,96 @@ function HomeContent() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen font-sans text-[#0f0f11] bg-white leading-relaxed antialiased">
       {/* Sticky Header */}
-      {/* Sticky Header */}
-      <header className="header">
-        <div className="container nav">
-          <Image 
-            src="/megamindlogoBlack.webp" 
-            alt="Megamind Logo" 
-            width={200} // Adjusted to a standard navbar logo width
-            height={80} // Adjusted height (change this based on your actual image aspect ratio)
-            priority    // Prioritizes loading for above-the-fold images to improve LCP
-            style={{ objectFit: 'contain' }} // Ensures the logo doesn't stretch
-          />
-          <button onClick={() => scrollToSection('booking-form')} className="nav-cta">
+      <header className="py-2.5 border-b border-gray-200 bg-white/85 backdrop-blur-md sticky top-0 z-[100] transition-all duration-300">
+        <div className="w-[92%] max-w-[1180px] mx-auto flex items-center justify-between gap-5">
+          <div className="text-2xl font-black tracking-tighter text-[#0f0f11] flex items-center">
+            <Image 
+              src="/megamindlogoBlack.webp" 
+              alt="Megamind Logo" 
+              width={200}
+              height={80}
+              priority
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
+          <button onClick={() => scrollToSection('booking-form')} className="hidden sm:inline-block border-none bg-gradient-to-br from-[#e31313] to-[#ff4b4b] text-white py-3 px-6 rounded-xl font-extrabold text-sm shadow-[0_4px_14px_rgba(227,19,19,0.2)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(227,19,19,0.35)] transition-all duration-300 cursor-pointer">
             Book Consultation
           </button>
         </div>
       </header>
+
       {/* Hero Section */}
-      <section className="hero">
-        <div className="container hero-grid">
+      <section className="pt-[60px] pb-[60px] md:pt-[100px] md:pb-[80px] relative overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(227,19,19,0.06),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(227,19,19,0.03),transparent_50%),linear-gradient(180deg,#ffffff_0%,#fbfbfc_100%)]">
+        <div className="w-[92%] max-w-[1180px] mx-auto grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-10 md:gap-[60px] items-center">
           <div>
-            <div className="eyebrow">
+            <div className="text-[#e31313] text-[13px] uppercase font-extrabold tracking-[2px] mb-5 inline-flex items-center gap-2 bg-[#e31313]/5 py-1.5 px-3.5 rounded-full border border-[#e31313]/10">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="6" cy="6" r="4.5" fill="#E31313" stroke="#E31313" strokeWidth="3" strokeOpacity="0.2"/>
               </svg>
               1-on-1 Consultation
             </div>
-            <h1>Website & Brand Audit Consultation</h1>
-            <p>
+            <h1 className="text-[clamp(38px,5.5vw,68px)] leading-[1.05] tracking-[-2.5px] mb-6 font-black text-transparent bg-clip-text bg-gradient-to-br from-[#0f0f11] via-[#0f0f11] to-[#3a3a40]">
+              Website & Brand Audit Consultation
+            </h1>
+            <p className="text-gray-500 text-lg max-w-[600px] mb-9 leading-relaxed">
               Review your customized website audit with our elite developers and designers. 
               Let's analyze your results, resolve technical issues, and engineer a roadmap 
               to skyrocket your search rankings, conversion rates, and revenue.
             </p>
-            <div className="hero-actions">
-              <button onClick={() => scrollToSection('booking-form')} className="btn-primary">
+            <div className="flex gap-5 flex-wrap items-center">
+              <button onClick={() => scrollToSection('booking-form')} className="inline-block border-none bg-gradient-to-br from-[#e31313] to-[#ff4b4b] text-white py-4 px-8 rounded-xl font-extrabold shadow-[0_10px_25px_rgba(227,19,19,0.25)] hover:-translate-y-[3px] hover:shadow-[0_15px_35px_rgba(227,19,19,0.4)] transition-all duration-300 cursor-pointer">
                 Book Free Consultation
               </button>
-              <button onClick={() => scrollToSection('step-guide')} className="btn-secondary">
+              <button onClick={() => scrollToSection('step-guide')} className="text-[#0f0f11] bg-transparent font-extrabold border-b-2 border-[#e31313] pt-1 px-0.5 pb-0.5 hover:text-[#e31313] hover:border-[#c71010] transition-all duration-200 text-base cursor-pointer">
                 How It Works &rarr;
               </button>
             </div>
           </div>
 
           <div>
-            <div className="audit-card">
-              <h3 style={{ fontSize: '18px', fontWeight: 800, marginBottom: '24px' }}>
+            <div className="bg-white border border-[#111111]/5 rounded-[28px] p-6 sm:p-9 shadow-[0_25px_60px_-12px_rgba(15,15,17,0.12)] relative transition-transform duration-400 hover:-translate-y-1 hover:shadow-[0_30px_70px_-10px_rgba(15,15,17,0.15)]">
+              <h3 className="text-[18px] font-extrabold mb-6">
                 {hasReport ? 'Your AI Audit Result' : 'Studio Scoring System'}
               </h3>
               
               <div>
-                <div className="score-row">
-                  <span>Desktop Score</span>
-                  <span>{animateWidths ? `${scores.desktopScore}%` : 'Loading...'}</span>
+                <div className="flex justify-between mb-2.5 font-bold text-[15px]">
+                  <span className="text-[#0f0f11]">Desktop Score</span>
+                  <span className="text-gray-500 font-medium text-[13px] bg-gray-100 py-0.5 px-2 rounded-md">{animateWidths ? `${scores.desktopScore}%` : 'Loading...'}</span>
                 </div>
-                <div className="bar">
-                  <span style={{ width: animateWidths ? `${scores.desktopScore}%` : '0%' }}></span>
-                </div>
-
-                <div className="score-row">
-                  <span>Mobile Score</span>
-                  <span>{animateWidths ? `${scores.mobileScore}%` : 'Loading...'}</span>
-                </div>
-                <div className="bar">
-                  <span style={{ width: animateWidths ? `${scores.mobileScore}%` : '0%' }}></span>
+                <div className="h-2 bg-[#f1f2f4] rounded-full overflow-hidden mb-6 relative">
+                  <span className="block h-full bg-gradient-to-br from-[#e31313] to-[#ff4b4b] rounded-full transition-all duration-1000 ease-out relative" style={{ width: animateWidths ? `${scores.desktopScore}%` : '0%' }}></span>
                 </div>
 
-                <div className="score-row">
-                  <span>SEO Score</span>
-                  <span>{animateWidths ? `${scores.seoScore}%` : 'Loading...'}</span>
+                <div className="flex justify-between mb-2.5 font-bold text-[15px]">
+                  <span className="text-[#0f0f11]">Mobile Score</span>
+                  <span className="text-gray-500 font-medium text-[13px] bg-gray-100 py-0.5 px-2 rounded-md">{animateWidths ? `${scores.mobileScore}%` : 'Loading...'}</span>
                 </div>
-                <div className="bar">
-                  <span style={{ width: animateWidths ? `${scores.seoScore}%` : '0%' }}></span>
+                <div className="h-2 bg-[#f1f2f4] rounded-full overflow-hidden mb-6 relative">
+                  <span className="block h-full bg-gradient-to-br from-[#e31313] to-[#ff4b4b] rounded-full transition-all duration-1000 ease-out relative" style={{ width: animateWidths ? `${scores.mobileScore}%` : '0%' }}></span>
+                </div>
+
+                <div className="flex justify-between mb-2.5 font-bold text-[15px]">
+                  <span className="text-[#0f0f11]">SEO Score</span>
+                  <span className="text-gray-500 font-medium text-[13px] bg-gray-100 py-0.5 px-2 rounded-md">{animateWidths ? `${scores.seoScore}%` : 'Loading...'}</span>
+                </div>
+                <div className="h-2 bg-[#f1f2f4] rounded-full overflow-hidden mb-6 relative">
+                  <span className="block h-full bg-gradient-to-br from-[#e31313] to-[#ff4b4b] rounded-full transition-all duration-1000 ease-out relative" style={{ width: animateWidths ? `${scores.seoScore}%` : '0%' }}></span>
                 </div>
               </div>
 
-              <div className="mini-grid">
-                <div className="mini-card">
-                  <strong>{scores.overall}</strong>
-                  <small>Overall Website Score</small>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-[30px]">
+                <div className="bg-gray-50 p-5 rounded-[20px] border border-gray-200 transition-all duration-300 hover:bg-white hover:border-[#e31313] hover:-translate-y-0.5 hover:shadow-md">
+                  <strong className="block text-[26px] font-black text-[#0f0f11] mb-1">{scores.overall}</strong>
+                  <small className="text-gray-500 font-semibold text-[13px] leading-snug">Overall Website Score</small>
                 </div>
-                <div className="mini-card">
-                  <strong style={{ fontSize: '15px', wordBreak: 'break-all' }}>
+                <div className="bg-gray-50 p-5 rounded-[20px] border border-gray-200 transition-all duration-300 hover:bg-white hover:border-[#e31313] hover:-translate-y-0.5 hover:shadow-md">
+                  <strong className="block text-[15px] font-black text-[#0f0f11] mb-1 break-all">
                     {formData.website ? formData.website.replace(/https?:\/\/(www\.)?/, '') : 'megamind.studio'}
                   </strong>
-                  <small>Target Domain</small>
+                  <small className="text-gray-500 font-semibold text-[13px] leading-snug">Target Domain</small>
                 </div>
               </div>
             </div>
@@ -478,54 +486,54 @@ function HomeContent() {
       </section>
 
       {/* How it Works */}
-      <section id="step-guide" className="section alt">
-        <div className="container">
-          <div className="center">
-            <h2>Three Steps to Transform Your Business</h2>
-            <p>Our consultation is designed to deliver immediate clarity and actionable next steps.</p>
+      <section id="step-guide" className="py-[60px] md:py-[90px] bg-gray-50 border-y border-gray-200">
+        <div className="w-[92%] max-w-[1180px] mx-auto">
+          <div className="text-center max-w-[720px] mx-auto mb-[60px]">
+            <h2 className="text-[clamp(28px,4vw,48px)] leading-[1.1] tracking-[-1.5px] mb-5 font-black text-[#0f0f11]">Three Steps to Transform Your Business</h2>
+            <p className="text-gray-500 text-lg">Our consultation is designed to deliver immediate clarity and actionable next steps.</p>
           </div>
-          <div className="steps">
-            <div className="step">
-              <div className="num">1</div>
-              <h3>Share Requirements</h3>
-              <p>Fill out the form below detailing your services, target budget, and core growth challenges.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
+            <div className="bg-white border border-gray-200 rounded-[24px] py-10 px-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-[#e31313]/20">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#e31313] to-[#ff4b4b] text-white rounded-2xl grid place-items-center mx-auto mb-6 text-[22px] font-black shadow-[0_8px_20px_rgba(227,19,19,0.25)]">1</div>
+              <h3 className="text-[22px] font-extrabold text-[#0f0f11] mb-3">Share Requirements</h3>
+              <p className="text-gray-500 text-[15px] leading-relaxed">Fill out the form below detailing your services, target budget, and core growth challenges.</p>
             </div>
-            <div className="step">
-              <div className="num">2</div>
-              <h3>Select Date & Time</h3>
-              <p>Choose your preferred date and time range for our 1-on-1 strategy deep-dive call.</p>
+            <div className="bg-white border border-gray-200 rounded-[24px] py-10 px-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-[#e31313]/20">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#e31313] to-[#ff4b4b] text-white rounded-2xl grid place-items-center mx-auto mb-6 text-[22px] font-black shadow-[0_8px_20px_rgba(227,19,19,0.25)]">2</div>
+              <h3 className="text-[22px] font-extrabold text-[#0f0f11] mb-3">Select Date & Time</h3>
+              <p className="text-gray-500 text-[15px] leading-relaxed">Choose your preferred date and time range for our 1-on-1 strategy deep-dive call.</p>
             </div>
-            <div className="step">
-              <div className="num">3</div>
-              <h3>Execute Blueprint</h3>
-              <p>Get a direct walk-through of your audit results, competitive gaps, and a step-by-step action plan.</p>
+            <div className="bg-white border border-gray-200 rounded-[24px] py-10 px-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-[#e31313]/20">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#e31313] to-[#ff4b4b] text-white rounded-2xl grid place-items-center mx-auto mb-6 text-[22px] font-black shadow-[0_8px_20px_rgba(227,19,19,0.25)]">3</div>
+              <h3 className="text-[22px] font-extrabold text-[#0f0f11] mb-3">Execute Blueprint</h3>
+              <p className="text-gray-500 text-[15px] leading-relaxed">Get a direct walk-through of your audit results, competitive gaps, and a step-by-step action plan.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Form Section */}
-      <section id="booking-form" className="section">
-        <div className="container form-section">
-          <div className="form-note">
-            <h2>Let's build something exceptional together.</h2>
-            <p>
+      <section id="booking-form" className="py-[60px] md:py-[90px]">
+        <div className="w-[92%] max-w-[1180px] mx-auto grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-10 md:gap-[50px] items-start">
+          <div className="bg-[#0f0f11] text-white rounded-[28px] p-6 sm:p-10 md:sticky md:top-[110px] shadow-lg border border-white/5">
+            <h2 className="text-[38px] leading-[1.1] mb-5 font-black tracking-[-1px]">Let's build something exceptional together.</h2>
+            <p className="text-[#a3a3ac] mb-[30px] text-[15px]">
               Our team of experts will review your website structure, loading speeds, brand metrics, 
               and organic rankings before our call to ensure you leave with maximum value.
             </p>
-            <ul className="check-list">
-              <li>Detailed PDF Roadmap</li>
-              <li>Competitive Gap Review</li>
-              <li>Tech Stack Audit</li>
-              <li>1-on-1 Live Developer Time</li>
+            <ul className="grid gap-4 list-none p-0">
+              <li className="flex gap-3 text-[#e4e4e7] font-bold text-[15px] items-center before:content-['✓'] before:text-[#e31313] before:font-black before:text-lg">Detailed PDF Roadmap</li>
+              <li className="flex gap-3 text-[#e4e4e7] font-bold text-[15px] items-center before:content-['✓'] before:text-[#e31313] before:font-black before:text-lg">Competitive Gap Review</li>
+              <li className="flex gap-3 text-[#e4e4e7] font-bold text-[15px] items-center before:content-['✓'] before:text-[#e31313] before:font-black before:text-lg">Tech Stack Audit</li>
+              <li className="flex gap-3 text-[#e4e4e7] font-bold text-[15px] items-center before:content-['✓'] before:text-[#e31313] before:font-black before:text-lg">1-on-1 Live Developer Time</li>
             </ul>
           </div>
 
           <div>
             {!isHydrated || loading ? (
-              <div style={{ display: 'flex', minHeight: '380px', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff', borderRadius: '28px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-premium)', width: '100%' }}>
-                <div style={{ fontWeight: 700, color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '12px', fontSize: '15px' }}>
-                  <svg style={{ animation: 'spin 1.5s linear infinite', width: '20px', height: '20px', color: 'var(--brand)', marginRight: '8px' }} viewBox="0 0 24 24" fill="none">
+              <div className="flex min-h-[380px] items-center justify-center bg-white rounded-[28px] border border-gray-200 shadow-[0_25px_60px_-12px_rgba(15,15,17,0.12)] w-full">
+                <div className="font-bold text-gray-500 flex items-center gap-3 text-[15px]">
+                  <svg className="animate-spin w-5 h-5 text-[#e31313] mr-2" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="10" stroke="rgba(227, 19, 19, 0.1)" strokeWidth="4" />
                     <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
@@ -533,124 +541,127 @@ function HomeContent() {
                 </div>
               </div>
             ) : success && bookingDetails ? (
-              <div className="success-card">
-                <div className="success-icon">✓</div>
-                <h2>Consultation Booked!</h2>
-                <p>
+              <div className="bg-white border-2 border-green-500 rounded-[28px] p-6 sm:p-10 lg:py-[50px] lg:px-[40px] text-center shadow-[0_25px_60px_-12px_rgba(15,15,17,0.12)] transform transition-transform duration-300 scale-100">
+                <div className="w-[72px] h-[72px] bg-green-100 text-green-500 rounded-full grid place-items-center mx-auto mb-6 text-[32px] font-black shadow-[0_4px_12px_rgba(34,197,94,0.15)]">✓</div>
+                <h2 className="text-[28px] font-black text-[#0f0f11] mb-3">Consultation Booked!</h2>
+                <p className="text-gray-500 text-base mb-6 leading-relaxed">
                   Thank you, <strong>{bookingDetails.name}</strong>. We have received your requirements 
                   and scheduled your consultation details. We will email you at <strong>{bookingDetails.email}</strong> to finalize.
                 </p>
-                <div className="booking-summary">
-                  <div className="booking-summary-row">
-                    <span>Requested Service</span>
-                    <span>{bookingDetails.service}</span>
+                <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 mb-6 text-left grid gap-2.5">
+                  <div className="flex justify-between text-sm border-b border-black/5 pb-2">
+                    <span className="font-semibold text-gray-500">Requested Service</span>
+                    <span className="font-bold text-[#0f0f11]">{bookingDetails.service}</span>
                   </div>
                   {bookingDetails.date && (
-                    <div className="booking-summary-row">
-                      <span>Preferred Date</span>
-                      <span>{new Date(bookingDetails.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                    <div className="flex justify-between text-sm border-b border-black/5 pb-2">
+                      <span className="font-semibold text-gray-500">Preferred Date</span>
+                      <span className="font-bold text-[#0f0f11]">{new Date(bookingDetails.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                     </div>
                   )}
-                  <div className="booking-summary-row">
-                    <span>Preferred Time</span>
-                    <span>{bookingDetails.time}</span>
+                  <div className="flex justify-between text-sm">
+                    <span className="font-semibold text-gray-500">Preferred Time</span>
+                    <span className="font-bold text-[#0f0f11]">{bookingDetails.time}</span>
                   </div>
                 </div>
-                <div style={{ marginTop: '20px', padding: '16px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '12px', color: '#16a34a', fontSize: '14px', fontWeight: 700, lineHeight: 1.5 }}>
+                <div className="mt-5 p-4 bg-green-50 border border-green-200 rounded-xl text-green-600 text-sm font-bold leading-relaxed">
                   Your consultation strategy call has been locked in. Our lead engineer and design partner are analyzing your domain details to build your roadmap.
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} noValidate>
-                <h3 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '24px' }}>Request Details</h3>
+              <form onSubmit={handleSubmit} noValidate className="bg-white border border-gray-200 rounded-[28px] p-6 sm:p-10 shadow-[0_25px_60px_-12px_rgba(15,15,17,0.12)]">
+                <h3 className="text-[24px] font-extrabold mb-6">Request Details</h3>
                 
                 {error && (
-                  <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#b91c1c', padding: '12px 16px', borderRadius: '10px', marginBottom: '20px', fontSize: '14px', fontWeight: 600 }}>
+                  <div className="bg-red-50 border border-red-300 text-red-700 py-3 px-4 rounded-xl mb-5 text-sm font-semibold">
                     {error}
                   </div>
                 )}
- 
-                <div className="form-grid">
-                  <div className="field">
-                    <label htmlFor="name">Full Name *</label>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label htmlFor="name" className="block font-bold mb-2 text-sm text-[#0f0f11]">Full Name *</label>
                     <input 
                       type="text" 
                       id="name" 
                       name="name" 
                       value={formData.name} 
                       onChange={handleInputChange} 
-                      className={errors.name ? 'input-error' : ''}
+                      className={`w-full border rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)] ${errors.name ? 'border-[#e31313]' : 'border-gray-300'}`}
                       placeholder="e.g. John Doe"
                     />
-                    {errors.name && <p className="field-error">{errors.name}</p>}
+                    {errors.name && <p className="text-[#e31313] text-xs font-bold mt-1.5 flex items-center gap-1 opacity-100 transition-opacity duration-200">{errors.name}</p>}
                   </div>
                   
-                  <div className="field">
-                    <label htmlFor="email">Email Address *</label>
+                  <div>
+                    <label htmlFor="email" className="block font-bold mb-2 text-sm text-[#0f0f11]">Email Address *</label>
                     <input 
                       type="email" 
                       id="email" 
                       name="email" 
                       value={formData.email} 
                       onChange={handleInputChange} 
-                      className={errors.email ? 'input-error' : ''}
+                      className={`w-full border rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)] ${errors.email ? 'border-[#e31313]' : 'border-gray-300'}`}
                       placeholder="e.g. john@company.com"
                     />
-                    {errors.email && <p className="field-error">{errors.email}</p>}
+                    {errors.email && <p className="text-[#e31313] text-xs font-bold mt-1.5 flex items-center gap-1 opacity-100 transition-opacity duration-200">{errors.email}</p>}
                   </div>
- 
-                  <div className="field">
-                    <label htmlFor="phone">Phone Number</label>
+
+                  <div>
+                    <label htmlFor="phone" className="block font-bold mb-2 text-sm text-[#0f0f11]">Phone Number</label>
                     <input 
                       type="tel" 
                       id="phone" 
                       name="phone" 
                       value={formData.phone} 
                       onChange={handleInputChange} 
+                      className="w-full border border-gray-300 rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)]"
                       placeholder="e.g. +1 (555) 000-0000"
                     />
                   </div>
- 
-                  <div className="field">
-                    <label htmlFor="company">Company / Brand Name</label>
+
+                  <div>
+                    <label htmlFor="company" className="block font-bold mb-2 text-sm text-[#0f0f11]">Company / Brand Name</label>
                     <input 
                       type="text" 
                       id="company" 
                       name="company" 
                       value={formData.company} 
                       onChange={handleInputChange} 
+                      className="w-full border border-gray-300 rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)]"
                       placeholder="e.g. Acme Corp"
                     />
                   </div>
- 
-                  <div className="field full">
-                    <label htmlFor="website">Website URL *</label>
+
+                  <div className="sm:col-span-2">
+                    <label htmlFor="website" className="block font-bold mb-2 text-sm text-[#0f0f11]">Website URL *</label>
                     <input 
                       type="text" 
                       id="website" 
                       name="website" 
                       value={formData.website} 
                       onChange={handleInputChange} 
-                      className={errors.website ? 'input-error' : ''}
+                      className={`w-full border rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)] ${errors.website ? 'border-[#e31313]' : 'border-gray-300'}`}
                       placeholder="e.g. www.acme.com"
                     />
-                    {errors.website && <p className="field-error">{errors.website}</p>}
+                    {errors.website && <p className="text-[#e31313] text-xs font-bold mt-1.5 flex items-center gap-1 opacity-100 transition-opacity duration-200">{errors.website}</p>}
                   </div>
- 
-                  <div className="field">
-                    <label htmlFor="industry">Industry</label>
+
+                  <div>
+                    <label htmlFor="industry" className="block font-bold mb-2 text-sm text-[#0f0f11]">Industry</label>
                     <input 
                       type="text" 
                       id="industry" 
                       name="industry" 
                       value={formData.industry} 
                       onChange={handleInputChange} 
+                      className="w-full border border-gray-300 rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)]"
                       placeholder="e.g. E-commerce, SaaS"
                     />
                   </div>
- 
-                  <div className="field">
-                    <label htmlFor="service">Core Service Needed *</label>
+
+                  <div>
+                    <label htmlFor="service" className="block font-bold mb-2 text-sm text-[#0f0f11]">Core Service Needed *</label>
                     <MultiSelectDropdown 
                       selected={formData.service} 
                       onChange={(val) => {
@@ -665,11 +676,11 @@ function HomeContent() {
                       }} 
                       hasError={!!errors.service}
                     />
-                    {errors.service && <p className="field-error">{errors.service}</p>}
+                    {errors.service && <p className="text-[#e31313] text-xs font-bold mt-1.5 flex items-center gap-1 opacity-100 transition-opacity duration-200">{errors.service}</p>}
                   </div>
- 
-                  <div className="field">
-                    <label htmlFor="budget">Target Budget</label>
+
+                  <div>
+                    <label htmlFor="budget" className="block font-bold mb-2 text-sm text-[#0f0f11]">Target Budget</label>
                     <SingleSelectDropdown
                       value={formData.budget}
                       options={BUDGET_OPTIONS}
@@ -677,9 +688,9 @@ function HomeContent() {
                       placeholder="Select budget..."
                     />
                   </div>
- 
-                  <div className="field">
-                    <label htmlFor="timeline">Timeline</label>
+
+                  <div>
+                    <label htmlFor="timeline" className="block font-bold mb-2 text-sm text-[#0f0f11]">Timeline</label>
                     <SingleSelectDropdown
                       value={formData.timeline}
                       options={TIMELINE_OPTIONS}
@@ -687,44 +698,46 @@ function HomeContent() {
                       placeholder="Select timeline..."
                     />
                   </div>
- 
-                  <div className="field full">
-                    <label htmlFor="goals">Main Business Goals *</label>
+
+                  <div className="sm:col-span-2">
+                    <label htmlFor="goals" className="block font-bold mb-2 text-sm text-[#0f0f11]">Main Business Goals *</label>
                     <textarea 
                       id="goals" 
                       name="goals" 
                       value={formData.goals} 
                       onChange={handleInputChange} 
-                      className={errors.goals ? 'input-error' : ''}
+                      className={`w-full min-h-[110px] resize-y border rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)] ${errors.goals ? 'border-[#e31313]' : 'border-gray-300'}`}
                       placeholder="What are you hoping to achieve with this project? (e.g. increase leads by 50%, improve checkout conversion)"
                     ></textarea>
-                    {errors.goals && <p className="field-error">{errors.goals}</p>}
+                    {errors.goals && <p className="text-[#e31313] text-xs font-bold mt-1.5 flex items-center gap-1 opacity-100 transition-opacity duration-200">{errors.goals}</p>}
                   </div>
- 
-                  <div className="field full">
-                    <label htmlFor="challenges">Technical / Design Challenges</label>
+
+                  <div className="sm:col-span-2">
+                    <label htmlFor="challenges" className="block font-bold mb-2 text-sm text-[#0f0f11]">Technical / Design Challenges</label>
                     <textarea 
                       id="challenges" 
                       name="challenges" 
                       value={formData.challenges} 
                       onChange={handleInputChange} 
+                      className="w-full min-h-[110px] resize-y border border-gray-300 rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)]"
                       placeholder="Are there specific roadblocks you are facing? (e.g. slow loading speeds, high mobile bounce rates)"
                     ></textarea>
                   </div>
- 
-                  <div className="field">
-                    <label htmlFor="preferred_date">Preferred Date</label>
+
+                  <div>
+                    <label htmlFor="preferred_date" className="block font-bold mb-2 text-sm text-[#0f0f11]">Preferred Date</label>
                     <input 
                       type="date" 
                       id="preferred_date" 
                       name="preferred_date" 
                       value={formData.preferred_date} 
                       onChange={handleInputChange} 
+                      className="w-full border border-gray-300 rounded-xl py-3.5 px-4 font-inherit outline-none bg-white text-[#0f0f11] transition-all duration-200 text-[15px] focus:border-[#e31313] focus:shadow-[0_0_0_4px_rgba(227,19,19,0.15)]"
                     />
                   </div>
- 
-                  <div className="field">
-                    <label htmlFor="preferred_time">Preferred Time of Day</label>
+
+                  <div>
+                    <label htmlFor="preferred_time" className="block font-bold mb-2 text-sm text-[#0f0f11]">Preferred Time of Day</label>
                     <SingleSelectDropdown
                       value={formData.preferred_time}
                       options={TIME_OPTIONS}
@@ -733,12 +746,12 @@ function HomeContent() {
                     />
                   </div>
                 </div>
- 
-                <button type="submit" disabled={submitting || loading} className="submit-btn">
+
+                <button type="submit" disabled={submitting || loading} className="w-full border-0 bg-gradient-to-br from-[#e31313] to-[#ff4b4b] text-white py-4 px-6 rounded-xl font-extrabold text-base cursor-pointer mt-4 shadow-[0_6px_20px_rgba(227,19,19,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_25px_rgba(227,19,19,0.35)] disabled:bg-gray-400 disabled:cursor-not-allowed disabled:shadow-none disabled:transform-none">
                   {submitting ? 'Booking Consultation...' : 'Confirm Consultation Booking'}
                 </button>
                 
-                <p className="small-copy">
+                <p className="text-gray-500 text-[13px] text-center mt-4 leading-relaxed">
                   By clicking above, you agree to our privacy policy. We will prepare your website 
                   metrics checklist prior to our strategy call.
                 </p>
@@ -749,9 +762,9 @@ function HomeContent() {
       </section>
 
       {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <p>&copy; {new Date().getFullYear()} Megamind Studios. All rights reserved. Strategic audits for high-growth brands.</p>
+      <footer className="bg-[#121214] text-white py-10 text-center border-t border-white/5">
+        <div className="w-[92%] max-w-[1180px] mx-auto">
+          <p className="text-[#a1a1aa] text-sm">&copy; {new Date().getFullYear()} Megamind Studios. All rights reserved. Strategic audits for high-growth brands.</p>
         </div>
       </footer>
     </div>
@@ -761,7 +774,7 @@ function HomeContent() {
 export default function Home() {
   return (
     <Suspense fallback={
-      <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff', fontFamily: 'sans-serif', color: '#6b7280' }}>
+      <div className="flex min-h-screen items-center justify-center bg-white font-sans text-gray-500">
         <div>Loading consultation details...</div>
       </div>
     }>
